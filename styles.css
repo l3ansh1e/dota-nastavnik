@@ -665,6 +665,33 @@ h1, h2, h3, .logo, .nav-btn, .cta, .draft-status, .team-col h3, .hints-head h3,
 }
 .items-line .is-items { display: flex; flex-wrap: wrap; gap: 4px; }
 
+/* Заглушка для браузера на ПК: сайт — только для телефонов */
+body.gated .topbar, body.gated main, body.gated .modal { display: none !important; }
+.pc-gate {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+}
+.pc-gate-card {
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel-lo));
+  border: 1px solid var(--brass);
+  border-image: linear-gradient(160deg, var(--brass-hi), #51422a 45%, var(--brass)) 1;
+  box-shadow: inset 0 1px 0 rgba(255, 244, 214, 0.06), 0 24px 70px rgba(0, 0, 0, 0.65);
+  max-width: 520px; padding: 44px 40px; text-align: center;
+  animation: fadeUp .4s cubic-bezier(.2,.7,.3,1);
+}
+.pc-gate-logo {
+  font-family: "Oswald", sans-serif; font-weight: 600; font-size: 17px;
+  letter-spacing: 5px; color: var(--gold);
+  text-shadow: 0 0 18px rgba(227, 182, 90, 0.45);
+}
+.pc-gate-card h2 {
+  font-size: 26px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.pc-gate-card p { color: var(--muted); font-size: 14.5px; line-height: 1.7; margin-bottom: 26px; }
+.pc-gate-card .cta { text-decoration: none; }
+.pc-gate-note { margin-top: 26px; margin-bottom: 0 !important; font-size: 13px !important; color: var(--faint) !important; }
+
 /* Скроллбары */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.35); }
