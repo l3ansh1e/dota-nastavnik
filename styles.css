@@ -691,6 +691,10 @@ body.gated .topbar, body.gated main, body.gated .modal { display: none !importan
 .pc-gate-card p { color: var(--muted); font-size: 14.5px; line-height: 1.7; margin-bottom: 26px; }
 .pc-gate-card .cta { text-decoration: none; }
 .pc-gate-note { margin-top: 26px; margin-bottom: 0 !important; font-size: 13px !important; color: var(--faint) !important; }
+.pc-gate-note + .pc-gate-note { margin-top: 10px; }
+.support-note { margin-top: 14px; color: var(--faint); font-size: 12.5px; letter-spacing: 0.4px; }
+.support-note a, .support-link { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(227, 182, 90, 0.4); transition: color .2s, border-color .2s; }
+.support-note a:hover, .support-link:hover { color: var(--gold-hi); border-color: var(--gold-hi); }
 
 /* Скроллбары */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
