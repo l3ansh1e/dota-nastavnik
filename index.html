@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0c1014">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Наставник">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<title>Дота-Наставник — тренажёр драфта для новичков</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Noto+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=10">
+</head>
+<body>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+<header class="topbar">
+  <div class="logo" onclick="go('home')">ДОТА-НАСТАВНИК</div>
+  <nav>
+    <button class="nav-btn" data-nav="draft" onclick="go('draft')">Тренажёр драфта</button>
+    <button class="nav-btn" data-nav="wiki" onclick="go('wiki')">Энциклопедия</button>
+  </nav>
+</header>
+
+<main id="screen-home" class="screen">
+  <div class="hero-banner">
+    <h1>Научись драфтить в Dota 2</h1>
+    <div class="ornament"><span class="gem"></span></div>
+    <p class="sub">Драфт — это половина победы. Тренажёр объяснит, почему один пик хороший, а другой — подарок врагу. На реальной статистике миллионов матчей.</p>
+    <div class="home-cards">
+      <div class="home-card" onclick="go('draft')">
+        <h2>Тренажёр драфта</h2>
+        <p>Мини-игра: собери команду против бота. После каждого пика — оценка и разбор: контры, синергии, баланс ролей.</p>
+        <span class="cta">Играть</span>
+      </div>
+      <div class="home-card" onclick="go('wiki')">
+        <h2>Энциклопедия героев</h2>
+        <p>Все герои: кто кого контрит и почему, сборки предметов, прокачка скиллов, советы новичку. Простым языком.</p>
+        <span class="cta">Открыть</span>
+      </div>
+    </div>
+    <p class="stats-note" id="home-stats"></p>
+  </div>
+</main>
+
+<main id="screen-draft" class="screen hidden">
+  <div class="draft-layout">
+    <section class="team-col team-my">
+      <h3>Твоя команда</h3>
+      <div id="my-picks" class="pick-list"></div>
+      <div class="team-meta" id="my-meta"></div>
+    </section>
+
+    <section class="draft-center">
+      <div class="draft-status" id="draft-status"></div>
+      <div class="grid-controls">
+        <input type="text" id="search" placeholder="Поиск героя (рус или англ)..." oninput="renderGrid()">
+        <div class="attr-filters" id="attr-filters">
+          <button class="attr-f active" data-attr="all-attrs" onclick="setAttrFilter(this)">Все</button>
+          <button class="attr-f attr-str" data-attr="str" onclick="setAttrFilter(this)">Сила</button>
+          <button class="attr-f attr-agi" data-attr="agi" onclick="setAttrFilter(this)">Ловкость</button>
+          <button class="attr-f attr-int" data-attr="int" onclick="setAttrFilter(this)">Интеллект</button>
+          <button class="attr-f attr-all" data-attr="all" onclick="setAttrFilter(this)">Универсалы</button>
+        </div>
+      </div>
+      <div id="hero-grid" class="hero-grid"></div>
+    </section>
+
+    <section class="side-col">
+      <div class="hints-box">
+        <div class="hints-head">
+          <h3>Подсказки</h3>
+          <label class="toggle"><input type="checkbox" id="hints-toggle" checked onchange="renderHints()"> <span>вкл</span></label>
+        </div>
+        <div id="hints-body"></div>
+      </div>
+      <section class="team-col team-enemy">
+        <h3>Команда бота</h3>
+        <div id="enemy-picks" class="pick-list"></div>
+        <div class="team-meta" id="enemy-meta"></div>
+      </section>
+    </section>
+  </div>
+
+  <div id="pick-feedback" class="pick-feedback hidden"></div>
+  <div id="draft-result" class="draft-result hidden"></div>
+</main>
+
+<main id="screen-wiki" class="screen hidden">
+  <div class="wiki-controls">
+    <input type="text" id="wiki-search" placeholder="Поиск героя (рус или англ)..." oninput="renderWiki()">
+    <div class="attr-filters" id="wiki-attr-filters">
+      <button class="attr-f active" data-attr="all-attrs" onclick="setWikiAttrFilter(this)">Все</button>
+      <button class="attr-f attr-str" data-attr="str" onclick="setWikiAttrFilter(this)">Сила</button>
+      <button class="attr-f attr-agi" data-attr="agi" onclick="setWikiAttrFilter(this)">Ловкость</button>
+      <button class="attr-f attr-int" data-attr="int" onclick="setWikiAttrFilter(this)">Интеллект</button>
+      <button class="attr-f attr-all" data-attr="all" onclick="setWikiAttrFilter(this)">Универсалы</button>
+    </div>
+    <select id="wiki-pos" onchange="renderWiki()">
+      <option value="0">Любая позиция</option>
+      <option value="1">Позиция 1 — керри</option>
+      <option value="2">Позиция 2 — мид</option>
+      <option value="3">Позиция 3 — оффлейн</option>
+      <option value="4">Позиция 4 — саппорт</option>
+      <option value="5">Позиция 5 — фулл-саппорт</option>
+    </select>
+  </div>
+  <div id="wiki-grid" class="hero-grid wiki-grid"></div>
+</main>
+
+<div id="hero-modal" class="modal hidden" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card" id="modal-card"></div>
+</div>
+
+<script src="data/heroes.js?v=10"></script>
+<script src="data/matchups.js?v=10"></script>
+<script src="data/knowledge.js?v=10"></script>
+<script src="app.js?v=10"></script>
+</body>
+</html>
